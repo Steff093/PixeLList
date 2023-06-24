@@ -44,6 +44,7 @@ namespace PixeLList.Pages
 
             Note neueNotiz = new Note { Id = neueId, Title = titel, Text = inhalt, Erstellungsdatum = DateTime.Now };
             notes.Add(neueNotiz);
+            //Test für mein Github
 
             string json = JsonConvert.SerializeObject(notes);
             StorageFile datei = await ApplicationData.Current.LocalFolder.CreateFileAsync("notizen.json", options: CreationCollisionOption.ReplaceExisting);
