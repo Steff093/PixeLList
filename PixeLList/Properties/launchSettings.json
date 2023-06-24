@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PixeLList (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PixeLList (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
