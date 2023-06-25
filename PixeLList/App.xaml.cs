@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -40,11 +41,22 @@ namespace PixeLList
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
-            m_window.Activate();
 
+            if (m_window == null)
+            {
+                m_window = new WelcomePage();
+                m_window.Activate();
+
+                await Task.Delay(5000);
+
+                var welcomeText = new TextBlock() { Text = "Welcome!" };
+
+                // Erstellen und Anzeigen des MainWindow
+                var mainWindow = new MainWindow();
+                mainWindow.Activate();
+            }
         }
 
         private Window m_window;

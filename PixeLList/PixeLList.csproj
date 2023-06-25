@@ -14,9 +14,14 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\heart.png" />
+    <Content Remove="Assets\Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Pages\AllNotesList.xaml" />
     <None Remove="Pages\NotePage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
+    <None Remove="Pages\WelcomePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -81,5 +86,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\WelcomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
