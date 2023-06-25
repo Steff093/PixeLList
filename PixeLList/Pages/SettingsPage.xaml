@@ -10,9 +10,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
     <Grid>
         <StackPanel>
+            <TextBlock x:Name="Test" 
+                       Text="Hier entsteht eine SettingsPage" 
+                       FontSize="25"/>
+
+            <TextBlock x:Name="Test2"
+                       Text="Test"
+                       FontSize="20"/>
+
+            <TextBlock x:Name="Test3"
+                       Text="Test123"
+                       FontSize="20"/>
+
         </StackPanel>
     </Grid>
 </Page>
