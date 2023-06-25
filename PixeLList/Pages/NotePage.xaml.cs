@@ -35,7 +35,7 @@ namespace PixeLList.Pages
                 successBar.IsOpen = true;
                 successBar.Title = "Fehler!";
                 successBar.Severity = InfoBarSeverity.Error;
-                successBar.Message = "Bitte Text oder Titel einfügen!";
+                successBar.Message = "Bitte Text oder Titel einfügen!"; 
                 return;
             }
 
