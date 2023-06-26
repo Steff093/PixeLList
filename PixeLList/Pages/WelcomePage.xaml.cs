@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,5 +29,11 @@ namespace PixeLList.Pages
             this.InitializeComponent();
         }
 
+        private void extendedSplashImage_Loaded(object sender, RoutedEventArgs e)
+        {
+            string image = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "p1x3lherz-0PMXCNxp8O1N9q4HrOOGqZ_mini.png");
+            extendedSplashImage.Source = new BitmapImage(new Uri(image));
+
+        }
     }
 }
