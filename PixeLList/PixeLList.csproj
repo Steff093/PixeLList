@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
@@ -21,10 +21,15 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <AppInstallerUri>https://github.com/Steff093/PixeLList</AppInstallerUri>
+    <AppInstallerUri>C:\Users\Skate\OneDrive\Desktop</AppInstallerUri>
+    <PackageIcon>heart.ico</PackageIcon>
+    <ApplicationIcon>heart_like_love_appreciation_support_appreciate_icon_254066.ico</ApplicationIcon>
+    <IsPublishable>False</IsPublishable>
+    <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\Image1.png" />
+    <Content Remove="Assets\heart.ico" />
+    <Content Remove="Assets\heart.png" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\AllNotesList.xaml" />
@@ -34,13 +39,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="Assets\heart.png" />
+    <Content Include="heart.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Pages\SettingsPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Skate\OneDrive\Desktop\heart.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
