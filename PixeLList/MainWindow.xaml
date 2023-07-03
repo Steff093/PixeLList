@@ -10,6 +10,7 @@
     mc:Ignorable="d">
 
 
+    
     <NavigationView x:Name="navigateItem" Padding="19,0,0,0" ItemInvoked="navigateItem_ItemInvoked" Background="{StaticResource TaskbarColor}">
         <Frame x:Name="contentFrame" >
             <Frame.Content>
@@ -18,7 +19,7 @@
         </Frame>
         <NavigationView.MenuItems>
             <NavigationViewItem Tag="Notizen">
-                <Grid>
+                <Grid x:Name="AppTitleBar">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="32"/>
                         <ColumnDefinition Width="50"/>

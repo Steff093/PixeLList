@@ -27,6 +27,8 @@ namespace PixeLList.Pages
         public WelcomePage()
         {
             this.InitializeComponent();
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(AppTitleBar);
         }
 
         private void extendedSplashImage_Loaded(object sender, RoutedEventArgs e)
