@@ -27,6 +27,7 @@ namespace PixeLList.Pages
 
             string titel = titleNotizTextBox.Text;
             string inhalt = notizTextbox.Text;
+            string datum = dateTime.Text;
             //int id = notes.Max(note => note.Id);
             //ShowNotification(titel, inhalt);
 
@@ -42,7 +43,7 @@ namespace PixeLList.Pages
             int maxId = notes.Any() ? notes.Max(note => note.Id) : 0;
             int neueId = maxId + 1;
 
-            Note neueNotiz = new Note { Id = neueId, Title = titel, Text = inhalt, Erstellungsdatum = DateTime.Now };
+            Note neueNotiz = new Note { Id = neueId, Title = titel, Text = inhalt, Erstellungsdatum = DateTime.Now};
             notes.Add(neueNotiz);
             //Test für mein Github
 

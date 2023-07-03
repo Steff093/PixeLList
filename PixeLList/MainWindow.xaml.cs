@@ -36,8 +36,6 @@ namespace PixeLList
             Title = "PixeLList";
             _notesViewModel = new NotesViewModel();
             contentFrame.DataContext = _notesViewModel;
-            ExtendsContentIntoTitleBar = true;
-            SetTitleBar(AppTitleBar);
 
         }
 

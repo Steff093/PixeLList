@@ -19,7 +19,7 @@
         </Frame>
         <NavigationView.MenuItems>
             <NavigationViewItem Tag="Notizen">
-                <Grid x:Name="AppTitleBar">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="32"/>
                         <ColumnDefinition Width="50"/>

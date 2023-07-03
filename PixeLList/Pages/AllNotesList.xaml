@@ -28,6 +28,7 @@
                             <TextBlock Text="{Binding Id}" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleLargeTextBlockStyle}"/>
                             <TextBlock Text="{Binding Text}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <TextBlock Text="{Binding Erstellungsdatum}" Style="{ThemeResource BaseTextBlockStyle}"/>
                             <Button x:Name="moreButton" Content="Mehr" Visibility="Collapsed">
                                 <Button.Flyout>
                                     <MenuFlyout>
