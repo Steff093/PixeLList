@@ -8,9 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="#464646">
+    <Grid Background="{StaticResource TaskbarColor}">
         <Image x:Name="extendedSplashImage" Source="Assets\p1x3lherz-0PMXCNxp8O1N9q4HrOOGqZ_mini.png" 
                Width="200" Height="200" VerticalAlignment="Center" HorizontalAlignment="Center" Loaded="extendedSplashImage_Loaded"/>
-        <ProgressBar Name="splashProgressRing" IsIndeterminate="True" Width="130" VerticalAlignment="Bottom"/>
+        <TextBlock x:Name="Hello" VerticalAlignment="Center" />
+        <ProgressBar Name="splashProgressRing" IsIndeterminate="True" Width="500" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
