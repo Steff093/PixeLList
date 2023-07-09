@@ -47,10 +47,6 @@ namespace PixeLList
                 
                 .BuildServiceProvider());
         }
-        public static Window MainWindow { get; } = new MainWindow()
-        {
-            Title = "AppDisplayName".GetLocalized()
-        };
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -60,10 +56,10 @@ namespace PixeLList
         {
             if (m_window == null)
             {
-                m_window = new WelcomePage();
-                m_window.Activate();
+                //m_window = new WelcomePage();
+                //m_window.Activate();
 
-                await Task.Delay(5000);
+                //await Task.Delay(5000);
 
                 // Erstellen und Anzeigen des MainWindow
                 var mainWindow = new MainWindow();

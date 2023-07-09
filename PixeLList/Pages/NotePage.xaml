@@ -39,7 +39,38 @@
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"/>
         <Button x:Name="saveButton" Content="Speichern" Click="saveButton_Click"/>
-        <Button x:Name="imageButton" Content="Bild einfügen" Click="imageButton_Click" Margin="0,0,0,0" />
+        
+        <!--Button für die Bildauswahl-->
+        <Button x:Name="imageButton" 
+                Content="Bild einfügen" 
+                Click="imageButton_Click"
+                Margin="0,0,0,0" />
+        
+        <!--Contentdialog für das öffnen der OpenFile (bzw. Filepicker)-->
+        <ContentDialog 
+            x:Name="imageSettingsDialog" 
+            PrimaryButtonText="Start" 
+            CloseButtonText="Abbrechen" >
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon
+                            Glyph="&#xE70F;"
+                            Width="40"
+                            Height="40"/>
+                        <TextBlock VerticalAlignment="Center" Text="Einstellungen"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+            
+            <!--Primary Button Style-->
+            <ContentDialog.PrimaryButtonStyle>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="{ThemeResource SystemAccentColorDark1}"/>
+                </Style>
+            </ContentDialog.PrimaryButtonStyle>
+        </ContentDialog>
+        
         <Image x:Name="notizImage" Width="200" Height="200" Stretch="Uniform"/>
     </StackPanel>
 </Page>

@@ -17,10 +17,6 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace PixeLList
 {
     /// <summary>
@@ -36,7 +32,6 @@ namespace PixeLList
             Title = "PixeLList";
             _notesViewModel = new NotesViewModel();
             contentFrame.DataContext = _notesViewModel;
-
         }
 
         private void navigateItem_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -62,17 +57,13 @@ namespace PixeLList
                     contentFrame.Navigate(typeof(AllNotesList));
                 }
                 else
-                {
                     contentFrame.Navigate(typeof(AllNotesList));
-                }
             }
         }
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
             if (e.SourcePageType == typeof(AllNotesList) && navigateItem.SelectedItem != _selectedNavItem)
-            {
-                navigateItem.SelectedItem = _selectedNavItem;
-            }
+                navigateItem.SelectedItem = _selectedNavItem; 
         }
         private void newNotiz_Click(object sender, RoutedEventArgs e)
         {

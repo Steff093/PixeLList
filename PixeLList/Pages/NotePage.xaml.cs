@@ -11,6 +11,8 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
 using System.Threading.Tasks;
+using PixeLList.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace PixeLList.Pages
 {
@@ -24,7 +26,11 @@ namespace PixeLList.Pages
         public NotePage()
         {
             this.InitializeComponent();
+
+            ViewModel = Ioc.Default.GetService<MainWindowViewModel?>();
         }
+
+        public MainWindowViewModel? ViewModel { get; set; }
 
         private async void saveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -66,18 +72,23 @@ namespace PixeLList.Pages
 
         private async void imageButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectFolderAsync();
+            ContentDialogResult result = await imageSettingsDialog.ShowAsync();
+            if (result is ContentDialogResult.Primary)
+            {
+                await OpenFolderAsync();
+            }
         }
-        private async Task<StorageFolder?> SelectFolderAsync()
+
+
+        // Hier stimmt noch etwas nicht, er startet nicht das OpenFileDiaglog ( in dem Fall FilePicker)
+        private async Task<StorageFolder?> OpenFolderAsync()
         {
-            FolderPicker folderPicker = new();
-            folderPicker.FileTypeFilter.Add("*");
-            IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
-            return await folderPicker.PickSingleFolderAsync();
+            FolderPicker folgerPicker = new();
+            folgerPicker.FileTypeFilter.Add("*");
+            var hwd = WindowNative.GetWindowHandle(this);
+            InitializeWithWindow.Initialize(folgerPicker, hwd);
+            return await folgerPicker.PickSingleFolderAsync();
         }
-
-
 
         //public void ShowNotification(string title, string message)
         //{
