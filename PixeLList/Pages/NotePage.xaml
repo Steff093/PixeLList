@@ -39,6 +39,8 @@
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"/>
         <Button x:Name="saveButton" Content="Speichern" Click="saveButton_Click"/>
+        <Button x:Name="imageButton" Content="Bild einfügen" Click="imageButton_Click" Margin="0,0,0,0" />
+        <Image x:Name="notizImage" Width="200" Height="200" Stretch="Uniform"/>
     </StackPanel>
 </Page>
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -40,7 +42,15 @@ namespace PixeLList
         public App()
         {
             this.InitializeComponent();
+
+            Ioc.Default.ConfigureServices(new ServiceCollection()
+                
+                .BuildServiceProvider());
         }
+        public static Window MainWindow { get; } = new MainWindow()
+        {
+            Title = "AppDisplayName".GetLocalized()
+        };
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -60,15 +70,16 @@ namespace PixeLList
                 mainWindow.Activate();
 
                 // Überprüfen, ob ein Update verfügbar ist
-                bool updateAvailable = await IsUpdateAvailable();
 
-                if (updateAvailable)
-                {
-                    // Ein Update ist verfügbar, zeige die Update-Benachrichtigung an
-                    ShowUpdateNotification();
+                //bool updateAvailable = await IsUpdateAvailable();
 
-                    await DownloadAndInstallUpdate();
-                }
+                //if (updateAvailable)
+                //{
+                //    // Ein Update ist verfügbar, zeige die Update-Benachrichtigung an
+                //    ShowUpdateNotification();
+
+                //    await DownloadAndInstallUpdate();
+                //}
             }
         }
 

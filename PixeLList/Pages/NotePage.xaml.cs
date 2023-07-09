@@ -6,6 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+using WinRT.Interop;
+using System.Threading.Tasks;
 
 namespace PixeLList.Pages
 {
@@ -58,6 +63,21 @@ namespace PixeLList.Pages
                 notizTextbox.Text = string.Empty;
             }
         }
+
+        private async void imageButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectFolderAsync();
+        }
+        private async Task<StorageFolder?> SelectFolderAsync()
+        {
+            FolderPicker folderPicker = new();
+            folderPicker.FileTypeFilter.Add("*");
+            IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
+            return await folderPicker.PickSingleFolderAsync();
+        }
+
+
 
         //public void ShowNotification(string title, string message)
         //{
