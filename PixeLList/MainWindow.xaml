@@ -10,8 +10,16 @@
     mc:Ignorable="d">
 
 
-    
-    <NavigationView x:Name="navigateItem" Padding="19,0,0,0" ItemInvoked="navigateItem_ItemInvoked" Background="{StaticResource TaskbarColor}">
+    <Grid>
+        <StackPanel
+            x:Name="Titlebar"
+            Grid.Row="0"
+            Margin="0,0,120,0"
+            Background="{ThemeResource AppBarBackgroundThemeBrush}"
+            Orientation="Horizontal">
+            <Image Source="Assets/microsoft.gif"/>
+        </StackPanel>
+        <NavigationView x:Name="navigateItem" Padding="19,0,0,0" ItemInvoked="navigateItem_ItemInvoked" Background="{StaticResource TaskbarColor}">
         <Frame x:Name="contentFrame" >
             <Frame.Content>
                 <local1:AllNotesList/>
@@ -47,5 +55,6 @@
             </NavigationViewItem>
         </NavigationView.MenuItems>
     </NavigationView>
+    </Grid>
 </Window>
 
