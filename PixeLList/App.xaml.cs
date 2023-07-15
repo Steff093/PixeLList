@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -42,10 +41,6 @@ namespace PixeLList
         public App()
         {
             this.InitializeComponent();
-
-            Ioc.Default.ConfigureServices(new ServiceCollection()
-                
-                .BuildServiceProvider());
         }
 
         /// <summary>
