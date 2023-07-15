@@ -1,18 +1,22 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using PixeLList.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.ApplicationModel.Core;
-using Windows.UI.ViewManagement;
 using WinRT.Interop;
-using System.Threading.Tasks;
-using PixeLList.ViewModels;
-using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace PixeLList.Pages
 {
@@ -27,18 +31,13 @@ namespace PixeLList.Pages
         {
             this.InitializeComponent();
 
-            ViewModel = Ioc.Default.GetService<MainWindowViewModel?>();
         }
-
-        public MainWindowViewModel? ViewModel { get; set; }
-
         private async void saveButton_Click(object sender, RoutedEventArgs e)
         {
             List<Note> notes = await JsonHelper.LadeNotizenAusJSON();
 
             string titel = titleNotizTextBox.Text;
             string inhalt = notizTextbox.Text;
-            string datum = dateTime.Text;
             //int id = notes.Max(note => note.Id);
             //ShowNotification(titel, inhalt);
 
@@ -56,7 +55,6 @@ namespace PixeLList.Pages
 
             Note neueNotiz = new Note { Id = neueId, Title = titel, Text = inhalt, Erstellungsdatum = DateTime.Now};
             notes.Add(neueNotiz);
-            //Test für mein Github
 
             string json = JsonConvert.SerializeObject(notes);
             StorageFile datei = await ApplicationData.Current.LocalFolder.CreateFileAsync("notizen.json", options: CreationCollisionOption.ReplaceExisting);
@@ -70,26 +68,26 @@ namespace PixeLList.Pages
             }
         }
 
-        private async void imageButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialogResult result = await imageSettingsDialog.ShowAsync();
-            if (result is ContentDialogResult.Primary)
-            {
-                await OpenFolderAsync();
-            }
-        }
+        //private async void imageButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        FileOpenPicker folderPicker = new();
+        //        folderPicker.ViewMode = PickerViewMode.Thumbnail;
+        //        folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+        //        folderPicker.FileTypeFilter.Add(".jpg");
+        //        folderPicker.FileTypeFilter.Add(".jpeg");
+        //        folderPicker.FileTypeFilter.Add(".png");
 
-
-        // Hier stimmt noch etwas nicht, er startet nicht das OpenFileDiaglog ( in dem Fall FilePicker)
-        private async Task<StorageFolder?> OpenFolderAsync()
-        {
-            FolderPicker folgerPicker = new();
-            folgerPicker.FileTypeFilter.Add("*");
-            var hwd = WindowNative.GetWindowHandle(this);
-            InitializeWithWindow.Initialize(folgerPicker, hwd);
-            return await folgerPicker.PickSingleFolderAsync();
-        }
-
+        //        var hwd = WindowNative.GetWindowHandle(this);
+        //        WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwd);
+        //        var folder = await folderPicker.PickSingleFileAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Test Irgendetwas
+        //    }
+        //}
         //public void ShowNotification(string title, string message)
         //{
         //    var toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText01);

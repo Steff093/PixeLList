@@ -9,69 +9,50 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <InfoBar x:Name="successBar"
+    <Grid>
+        <StackPanel>
+            <InfoBar x:Name="successBar"
                 IsOpen="False"
                 Severity="Success"
                 Title="Gespeichert!"
                 Message="Erfolgreich gespeichert!" />
 
-        <TextBlock Text="Titel" FontSize="19" Margin="0,0,0,5"/>
-        <TextBox x:Name="titleNotizTextBox" 
-                 FontSize="18" 
+            <TextBlock 
+                Text="Titel" 
+                FontSize="19" 
+                Margin="0,0,0,5"/>
+
+            <TextBox x:Name="titleNotizTextBox" 
+                 FontSize="19" 
                  VerticalContentAlignment="Top" 
                  HorizontalAlignment="Left" 
                  Width="200"
-                 AcceptsReturn="False">
-        </TextBox>
+                 AcceptsReturn="False"/>
 
-        <TextBlock Text="Eingefügte Notiz" FontSize="19" Margin="0,0,0,5"/>
-        <TextBox x:Name="notizTextbox"
+            <TextBlock x:Name="eingefuegteNotiz"
+                Text="Eingefügte Notiz" 
+                FontSize="19" 
+                Margin="0,0,0,5"/>
+
+            <TextBox x:Name="notizTextbox"
                  FontSize="18"
                  VerticalAlignment="Bottom"
                  HorizontalAlignment="Left"
                  Width="600"
                  Height="500"
-                 AcceptsReturn="True">
-        </TextBox>
-        <TextBlock x:Name="dateTime"
-                   FontSize="18"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Left"/>
-        <Button x:Name="saveButton" Content="Speichern" Click="saveButton_Click"/>
-        
-        <!--Button für die Bildauswahl-->
-        <Button x:Name="imageButton" 
-                Content="Bild einfügen" 
-                Click="imageButton_Click"
-                Margin="0,0,0,0" />
-        
-        <!--Contentdialog für das öffnen der OpenFile (bzw. Filepicker)-->
-        <ContentDialog 
-            x:Name="imageSettingsDialog" 
-            PrimaryButtonText="Start" 
-            CloseButtonText="Abbrechen" >
-            <ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon
-                            Glyph="&#xE70F;"
-                            Width="40"
-                            Height="40"/>
-                        <TextBlock VerticalAlignment="Center" Text="Einstellungen"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>
+                 AcceptsReturn="True"/>
+
+            <Button 
+                x:Name="saveButton" 
+                Content="Speichern" 
+                Click="saveButton_Click"/>
             
-            <!--Primary Button Style-->
-            <ContentDialog.PrimaryButtonStyle>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="{ThemeResource SystemAccentColorDark1}"/>
-                </Style>
-            </ContentDialog.PrimaryButtonStyle>
-        </ContentDialog>
-        
-        <Image x:Name="notizImage" Width="200" Height="200" Stretch="Uniform"/>
-    </StackPanel>
+            <!--<Button
+                x:Name="imageButton"
+                Click="imageButton_Click"/>-->
+
+            <!--Button für die Bildauswahl-->
+        </StackPanel>
+    </Grid>
 </Page>
 

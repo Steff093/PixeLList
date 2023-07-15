@@ -39,7 +39,8 @@
                     <MenuFlyout>
                         <MenuFlyoutItem x:Name="newNotiz" Text="Neue Notiz" Click="newNotiz_Click"/>
                         <MenuFlyoutItem x:Name="allNotiz" Text="Alle Notizen" Click="allNotiz_Click"/>
-                    </MenuFlyout>
+                            <MenuFlyoutItem x:Name="picTure" Text="Bild hinzufügen" Click="picTure_Click"/>
+                        </MenuFlyout>
                 </NavigationViewItem.ContextFlyout>
             </NavigationViewItem>
 

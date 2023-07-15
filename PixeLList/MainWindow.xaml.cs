@@ -16,6 +16,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 namespace PixeLList
 {
@@ -49,10 +51,9 @@ namespace PixeLList
                 {
                     contentFrame.Navigated += ContentFrame_Navigated;
                     if (navigateItem.SelectedItem is NavigationViewItem selectedItem && selectedItem.Tag.ToString() == "Notizen")
-                    {
                         // Das ausgewählte Element ist bereits "Notizen"
                         return;
-                    }
+                    
                     _selectedNavItem = item;
                     contentFrame.Navigate(typeof(AllNotesList));
                 }
@@ -76,6 +77,27 @@ namespace PixeLList
             AllNotesList allnotes = new AllNotesList();
 
             contentFrame.Content = allnotes;
+        }
+
+        private async void picTure_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FileOpenPicker folderPicker = new();
+                folderPicker.ViewMode = PickerViewMode.Thumbnail;
+                folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
+                folderPicker.FileTypeFilter.Add(".jpg");
+                folderPicker.FileTypeFilter.Add(".jpeg");
+                folderPicker.FileTypeFilter.Add(".png");
+
+                var hwd = WindowNative.GetWindowHandle(this);
+                WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwd);
+                var folder = await folderPicker.PickSingleFileAsync();
+            }
+            catch (Exception ex)
+            {
+                // Test Irgendetwas
+            }
         }
     }
 }
