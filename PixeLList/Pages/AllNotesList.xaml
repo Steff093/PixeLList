@@ -8,40 +8,43 @@
     xmlns:vm="using:PixeLList.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:NotesViewModel/>
     </Page.DataContext>
 
     <Grid>
-        <StackPanel>
-            <Frame x:Name="contentFrame"/>
-            <TextBlock x:Name="noNotesMessage" Text="Keine Notizen vorhanden." HorizontalAlignment="Center" 
-           VerticalAlignment="Bottom"  Visibility="{Binding Notes.Count}"/>
-            <!--<Button x:Name="openPopupButton" Content="Popup öffnen" Click="openPopupButton_Click"/>-->
-            <ListView x:Name="NoteListView" ItemsSource="{Binding Notes}" SelectedIndex="{Binding SelectedNoteIndex}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel x:Name="stackPanel" PointerPressed="stackPanel_PointerPressed">
-                            <TextBlock Text="{Binding Id}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleLargeTextBlockStyle}"/>
-                            <TextBlock Text="{Binding Text}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <TextBlock Text="{Binding Erstellungsdatum}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                            <Button x:Name="moreButton" Content="Mehr" Visibility="Collapsed">
-                                <Button.Flyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem x:Name="bearbeitenFlyout" Text="Bearbeiten" Click="bearbeitenFlyout_Click"/>
-                                        <MenuFlyoutItem x:Name="deleteFlyout" Text="Löschen" Click="deleteFlyout_Click"/>
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                            </Button>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel>
+                <Frame x:Name="contentFrame"/>
+                <TextBlock 
+                x:Name="noNotesMessage" 
+                Text="Keine Notizen vorhanden." 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom"  Visibility="{Binding Notes.Count}"/>
+                <ListView x:Name="NoteListView" ItemsSource="{Binding Notes}" SelectedIndex="{Binding SelectedNoteIndex}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel x:Name="stackPanel" PointerPressed="stackPanel_PointerPressed">
+                                <TextBlock Text="{Binding Id}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleLargeTextBlockStyle}"/>
+                                <TextBlock Text="{Binding Text}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <TextBlock Text="{Binding Erstellungsdatum}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <Button x:Name="moreButton" Content="Mehr" Visibility="Collapsed">
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem x:Name="bearbeitenFlyout" Text="Bearbeiten" Click="bearbeitenFlyout_Click"/>
+                                            <MenuFlyoutItem x:Name="deleteFlyout" Text="Löschen" Click="deleteFlyout_Click"/>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
 
         <Popup x:Name="editPopup" IsOpen="False" Width="400" Height="400" >
             <Grid Background="Gray">

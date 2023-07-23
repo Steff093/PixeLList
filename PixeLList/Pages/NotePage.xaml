@@ -6,8 +6,7 @@
     xmlns:local="using:PixeLList.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <Grid>
         <StackPanel>
@@ -46,12 +45,6 @@
                 x:Name="saveButton" 
                 Content="Speichern" 
                 Click="saveButton_Click"/>
-            
-            <!--<Button
-                x:Name="imageButton"
-                Click="imageButton_Click"/>-->
-
-            <!--Button für die Bildauswahl-->
         </StackPanel>
     </Grid>
 </Page>

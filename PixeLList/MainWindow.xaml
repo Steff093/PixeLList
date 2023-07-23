@@ -9,53 +9,69 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
     <Grid>
         <StackPanel
             x:Name="Titlebar"
             Grid.Row="0"
             Margin="0,0,120,0"
-            Background="{ThemeResource AppBarBackgroundThemeBrush}"
             Orientation="Horizontal">
             <Image Source="Assets/microsoft.gif"/>
         </StackPanel>
-        <NavigationView x:Name="navigateItem" Padding="19,0,0,0" ItemInvoked="navigateItem_ItemInvoked" Background="{StaticResource TaskbarColor}">
-        <Frame x:Name="contentFrame" >
-            <Frame.Content>
-                <local1:AllNotesList/>
-            </Frame.Content>
-        </Frame>
-        <NavigationView.MenuItems>
-            <NavigationViewItem Tag="Notizen">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="32"/>
-                        <ColumnDefinition Width="50"/>
-                    </Grid.ColumnDefinitions>
-                    <FontIcon Grid.Column="0" Glyph="&#xE70B;" HorizontalAlignment="Left"/>
-                    <TextBlock x:Name="Notizen" Grid.Column="1" Text="Notizen"/>
-                </Grid>
-                <NavigationViewItem.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem x:Name="newNotiz" Text="Neue Notiz" Click="newNotiz_Click"/>
-                        <MenuFlyoutItem x:Name="allNotiz" Text="Alle Notizen" Click="allNotiz_Click"/>
-                            <MenuFlyoutItem x:Name="picTure" Text="Bild hinzufügen" Click="picTure_Click"/>
-                        </MenuFlyout>
-                </NavigationViewItem.ContextFlyout>
-            </NavigationViewItem>
 
-            <NavigationViewItem Tag="Test">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="32"/>
-                        <ColumnDefinition Width="50"/>
-                    </Grid.ColumnDefinitions>
-                    <FontIcon Grid.Column="0" Glyph="&#xE734;" HorizontalAlignment="Left"/>
-                    <TextBlock Grid.Column="1" Text="Test"/>
-                </Grid>
-            </NavigationViewItem>
-        </NavigationView.MenuItems>
-    </NavigationView>
+        <ContentDialog 
+            x:Name="pictureDialog"
+            PrimaryButtonText="Ok"
+            CloseButtonText="Abbrechen"
+            IsEnabled="False">
+            <StackPanel>
+                <TextBlock x:Name="meldungsBlock" Text="Bitte wählen Sie eine Notiz aus"/>
+                <StackPanel>
+                    <ComboBox x:Name="pictureBox" Width="200" >
+                        <ComboBoxItem Content="Notiz auswählen" IsEnabled="False" IsSelected="True" />
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </ContentDialog>
+
+
+        <NavigationView x:Name="navigateItem" Padding="19,0,0,0" ItemInvoked="navigateItem_ItemInvoked">
+            <Frame x:Name="contentFrame" >
+                <Frame.Content>
+                    <local1:AllNotesList/>
+                </Frame.Content>
+            </Frame>
+            
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="Notizen">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Grid.Column="0" Glyph="&#xE70B;" HorizontalAlignment="Left"/>
+                        <TextBlock x:Name="Notizen" Grid.Column="1" Text="Notizen"/>
+                    </Grid>
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Name="newNotiz" Text="Neue Notiz" Click="newNotiz_Click"/>
+                            <MenuFlyoutItem x:Name="allNotiz" Text="Alle Notizen" Click="allNotiz_Click"/>
+                            <MenuFlyoutItem x:Name="pitureMenuFlyout" Text="Bild hinzufügen" Click="picTureMenuFlyout_Click"/>
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="Ordner">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Grid.Column="0" Glyph="&#xE734;" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" Text="Ordner"/>
+                    </Grid>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+        </NavigationView>
     </Grid>
 </Window>
 

@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -5,9 +6,9 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using PixeLList.Models;
 using PixeLList.Pages;
 using PixeLList.ViewModels;
+using PixeLList.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,10 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
+using Uno.Extensions.Specialized;
+using System.ComponentModel.Design;
+using Windows.UI.StartScreen;
+using System.Drawing;
 
 namespace PixeLList
 {
@@ -28,12 +33,15 @@ namespace PixeLList
     {
         private NotesViewModel _notesViewModel;
         private NavigationViewItem _selectedNavItem;
+        private AllNotesList _allnotesList;
         public MainWindow()
         {
             this.InitializeComponent();
             Title = "PixeLList";
             _notesViewModel = new NotesViewModel();
-            contentFrame.DataContext = _notesViewModel;
+
+            LoadNotes();
+            
         }
 
         private void navigateItem_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -50,10 +58,10 @@ namespace PixeLList
                 if (item != null && item.Tag.ToString() == "Notizen")
                 {
                     contentFrame.Navigated += ContentFrame_Navigated;
+                    // Das ausgewählte Element ist bereits "Notizen"
                     if (navigateItem.SelectedItem is NavigationViewItem selectedItem && selectedItem.Tag.ToString() == "Notizen")
-                        // Das ausgewählte Element ist bereits "Notizen"
                         return;
-                    
+
                     _selectedNavItem = item;
                     contentFrame.Navigate(typeof(AllNotesList));
                 }
@@ -63,14 +71,16 @@ namespace PixeLList
         }
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            if (e.SourcePageType == typeof(AllNotesList) && navigateItem.SelectedItem != _selectedNavItem)
-                navigateItem.SelectedItem = _selectedNavItem; 
+            if (e.SourcePageType == typeof(AllNotesList))
+                navigateItem.SelectedItem = _selectedNavItem;
         }
         private void newNotiz_Click(object sender, RoutedEventArgs e)
         {
             NotePage page = new NotePage();
 
             contentFrame.Content = page;
+
+            LoadNotes();
         }
         private void allNotiz_Click(object sender, RoutedEventArgs e)
         {
@@ -79,7 +89,36 @@ namespace PixeLList
             contentFrame.Content = allnotes;
         }
 
-        private async void picTure_Click(object sender, RoutedEventArgs e)
+        private void picTureMenuFlyout_Click(object sender, RoutedEventArgs e)
+        {
+            //FileOpenPicker();
+
+            pictureDialog.IsEnabled = true;
+            pictureDialog.ShowAsync();
+            LoadNotes();
+
+        }
+        private async void LoadNotes()
+        {
+            try
+            {
+                List<Note> notes = await JsonHelper.LadeNotizenAusJSON();
+                pictureBox.Items.Clear();
+                foreach (var note in notes)
+                {
+                    pictureBox.Items.Add(note.Title);
+                }
+                //ContentDialogResult result = await pictureDialog.ShowAsync();
+                //if (pictureBox.SelectedItem != null && result == ContentDialogResult.Primary) { }
+                //FileOpenPicker();
+
+            }
+            catch (Exception ex)
+            {
+                meldungsBlock.Text = ex.Message;
+            }
+        }
+        private async void FileOpenPicker()
         {
             try
             {
@@ -96,8 +135,9 @@ namespace PixeLList
             }
             catch (Exception ex)
             {
-                // Test Irgendetwas
+                pictureDialog.Content = ex.Message;
             }
         }
     }
 }
+

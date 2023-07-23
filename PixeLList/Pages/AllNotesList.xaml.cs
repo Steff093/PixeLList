@@ -40,15 +40,19 @@ namespace PixeLList.Pages
 
             contentFrame = new Frame();
 
-            if (ViewModel.Notes.Count == 0 && noNotesMessage != null)
+            if (ViewModel.Notes.Count == 0 && noNotesMessage == null)
                 noNotesMessage.Visibility = Visibility.Visible;
             else if (noNotesMessage != null)
                 noNotesMessage.Visibility = Visibility.Collapsed;
 
             LoadNotesAsync();
+
+            JsonHelper.CreateBackupSystem();
         }
         private async void LoadNotesAsync()
         {
+            //Hier auf Fehler überprüfen !
+
             // Laden der Notizen aus der JSON-Datei
             List<Note> notes = await JsonHelper.LadeNotizenAusJSON();
 
@@ -63,51 +67,12 @@ namespace PixeLList.Pages
                 ViewModel.Notes.Add(note);
             }
         }
-        private async void LadeNotizen()
-        {
-            List<Note> notizen = await JsonHelper.LadeNotizenAusJSON();
-
-            ViewModel.aktualisierteNotizen(notizen);
-        }
-
-        private async void deleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            if (button != null)
-            {
-                var note = button.DataContext as Note;
-                if (note != null)
-                {
-                    ViewModel.Notes.Remove(note);
-                    // Speichern der Notizen in der JSON-Datei nach dem Löschen
-                    await JsonHelper.SpeichereNotizen(ViewModel.Notes.ToList());
-                }
-            }
-        }
-
-        private void editButton_Click(object sender, RoutedEventArgs e)
-        {
-            editPopup.IsOpen = true;
-            var button = sender as Button;
-            if(button != null)
-            {
-                var note = button.DataContext as Note;
-                if (note != null)
-                {
-                    ViewModel.SelectedNote = note;
-                    editPopup.IsOpen = true;
-                }
-            }
-
-        }
-
         private async void saveButton_Click(object sender, RoutedEventArgs e)
-        { 
+        {
             await JsonHelper.SpeichereNotizen(ViewModel?.Notes.ToList());
             editPopup.IsOpen = false; // Schließe das Popup-Fenster
             ViewModel.OnPropertyChanged(nameof(ViewModel.SelectedNote));
             LoadNotesAsync();
-
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -115,10 +80,6 @@ namespace PixeLList.Pages
             editPopup.IsOpen = false; // Schließe das Popup-Fenster
         }
 
-        private void openPopupButton_Click(object sender, RoutedEventArgs e)
-        {
-            editPopup.IsOpen = true;
-        }
         private async void deleteFlyout_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuFlyoutItem;
