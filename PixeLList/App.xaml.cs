@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -9,8 +10,10 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using Octokit;
 using PixeLList.Pages;
+using PixeLList.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -60,113 +63,8 @@ namespace PixeLList
                 var mainWindow = new MainWindow();
                 mainWindow.Activate();
 
-                // Überprüfen, ob ein Update verfügbar ist
-
-                //bool updateAvailable = await IsUpdateAvailable();
-
-                //if (updateAvailable)
-                //{
-                //    // Ein Update ist verfügbar, zeige die Update-Benachrichtigung an
-                //    ShowUpdateNotification();
-
-                //    await DownloadAndInstallUpdate();
-                //}
             }
         }
-
-        private Version GetCurrentAppVersion()
-        {
-            var version = typeof(App).Assembly.GetName().Version;
-            return new Version(version.Major, version.Minor, version.Build);
-        }
-
-        private async Task<bool> IsUpdateAvailable()
-        {
-            var github = new GitHubClient(new ProductHeaderValue("PixeLList"));
-            var release = await github.Repository.Release.GetAll("Steff093", "PixeLList");
-
-            if (release.Count == 0)
-                return false;
-
-            Version latestVersion = new Version(release[0].TagName);
-            Version currentVersion = GetCurrentAppVersion();
-
-            return latestVersion > currentVersion;
-        }
-
-        private void ShowUpdateNotification()
-        {
-            var toastXmlString = $@"
-        <toast>
-            <visual>
-                <binding template='ToastGeneric'>
-                    <text>Eine neue Version ist verfügbar!</text>
-                    <text>Klicken Sie hier, um das Update herunterzuladen und zu installieren.</text>
-                </binding>
-            </visual>
-            <actions>
-                <action content='Update' arguments='update' />
-            </actions>
-        </toast>";
-
-            var toastXml = new Windows.Data.Xml.Dom.XmlDocument();
-            toastXml.LoadXml(toastXmlString);
-
-            var toast = new Windows.UI.Notifications.ToastNotification(toastXml);
-
-            var toastNotifier = Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier();
-            toastNotifier.Show(toast);
-        }
-
-        private async Task DownloadAndInstallUpdate()
-        {
-            var github = new GitHubClient(new ProductHeaderValue("PixeLList"));
-            var releases = await github.Repository.Release.GetAll("Steff093", "PixeLList");
-
-            var latestRelease = releases[0]; // Annahme: Die neueste Version ist das erste Release in der Liste
-
-            var asset = latestRelease.Assets.FirstOrDefault(a => a.Name.EndsWith(".msix"));
-            if (asset != null)
-            {
-                using (var client = new WebClient())
-                {
-                    var tempFilePath = System.IO.Path.GetTempFileName();
-
-                    // Herunterladen des Release-Archivs (MSIX-Paket)
-                    await client.DownloadFileTaskAsync(asset.BrowserDownloadUrl, tempFilePath);
-
-                    // Installieren des heruntergeladenen Pakets
-                    PackageManager packageManager = new PackageManager();
-                    var result = await packageManager.UpdatePackageAsync(new Uri(tempFilePath), null, DeploymentOptions.ForceTargetApplicationShutdown);
-                    if (result.IsRegistered)
-                    {
-                        // Das Update wurde erfolgreich installiert
-                        // Führe entsprechende Aktionen aus, z.B. Neustart der Anwendung
-                        RestartApp();
-                    }
-                    else
-                    {
-                        // Fehler beim Installieren des Updates
-                        // Behandele den Fehler entsprechend
-                    }
-                }
-            }
-        }
-
-        private void RestartApp()
-        {
-            // Schließen der aktuellen Anwendung
-            Current.Exit();
-
-            // Starten der Anwendung neu
-            var launchString = $"app-uri:PixeLList"; // Ersetzen Sie "PixeLList" durch den Namen Ihrer Anwendung
-            var options = new Windows.System.LauncherOptions();
-            options.TargetApplicationPackageFamilyName = Windows.ApplicationModel.Package.Current.Id.FamilyName;
-            Windows.System.Launcher.LaunchUriAsync(new Uri(launchString), options);
-        }
-
         private Window m_window;
-
-
     }
 }

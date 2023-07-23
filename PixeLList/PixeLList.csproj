@@ -22,14 +22,15 @@
     <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppInstallerUri>C:\Users\Skate\OneDrive\Desktop</AppInstallerUri>
-    <PackageIcon>heart.ico</PackageIcon>
-    <ApplicationIcon>heart_like_love_appreciation_support_appreciate_icon_254066.ico</ApplicationIcon>
+    <PackageIcon></PackageIcon>
+    <ApplicationIcon></ApplicationIcon>
     <IsPublishable>False</IsPublishable>
     <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\heart.ico" />
     <Content Remove="Assets\heart.png" />
+    <Content Remove="Assets\microsoft.gif" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\AllNotesList.xaml" />
@@ -46,10 +47,12 @@
     <Content Include="Assets\heart.png" />
     <Content Include="Assets\heart.png" />
     <Content Include="Assets\heart.png" />
-	<Content Include="Assets\microsoft.gif" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.18" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

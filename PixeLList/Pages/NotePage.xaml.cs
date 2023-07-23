@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using PixeLList.Models;
+using PixeLList.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,12 +26,9 @@ namespace PixeLList.Pages
     /// </summary>
     public sealed partial class NotePage : Page
     {
-        public event EventHandler<NoteSavedEventArgs> NoteSaved;
-
         public NotePage()
         {
             this.InitializeComponent();
-
         }
         private async void saveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -67,38 +65,5 @@ namespace PixeLList.Pages
                 notizTextbox.Text = string.Empty;
             }
         }
-
-        //private async void imageButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        FileOpenPicker folderPicker = new();
-        //        folderPicker.ViewMode = PickerViewMode.Thumbnail;
-        //        folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
-        //        folderPicker.FileTypeFilter.Add(".jpg");
-        //        folderPicker.FileTypeFilter.Add(".jpeg");
-        //        folderPicker.FileTypeFilter.Add(".png");
-
-        //        var hwd = WindowNative.GetWindowHandle(this);
-        //        WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwd);
-        //        var folder = await folderPicker.PickSingleFileAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Test Irgendetwas
-        //    }
-        //}
-        //public void ShowNotification(string title, string message)
-        //{
-        //    var toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText01);
-
-        //    var textNodes = toastXml.GetElementsByTagName("text");
-        //    textNodes[0].AppendChild(toastXml.CreateTextNode(title));
-        //    textNodes[1].AppendChild(toastXml.CreateTextNode(message));
-
-        //    var notifier = ToastNotificationManager.CreateToastNotifier();
-        //    var notification = new ToastNotification(toastXml);
-        //    notifier.Show(notification);
-        //}
     }
 }

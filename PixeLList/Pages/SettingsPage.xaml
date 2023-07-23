@@ -6,24 +6,72 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PixeLList.Pages"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <ScrollViewer Margin="56,44,56,44">
         <StackPanel>
-            <TextBlock x:Name="Test" 
-                       Text="Hier entsteht eine SettingsPage" 
-                       FontSize="25"/>
+            <labs:SettingsCard 
+                Header="Settingscard Header.."
+                Description="Das ist die Kopfzeile der Header">
+                <labs:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE82F;"/>
+                </labs:SettingsCard.HeaderIcon>
+                <Button Content="Test"/>
+            </labs:SettingsCard>
 
-            <TextBlock x:Name="Test2"
-                       Text="Test"
-                       FontSize="20"/>
+            <labs:SettingsCard
+            x:Name="klickbaresSettings"
+            Header="Klick HeaderSettingscard"
+            IsClickEnabled="True"
+            Click="klickbaresSettings_Click"/>
 
-            <TextBlock x:Name="Test3"
-                       Text="Test123"
-                       FontSize="20"/>
+            <labs:SettingsExpander
+            x:Name="multiExpander"
+            Header="Das ist eine Expander"
+            Description="Beschreibung... und sowas">
+                <labs:SettingsExpander.Content>
+                    <ToggleSwitch
+                        x:Name="switchToggle" 
+                        IsOn="True"
+                        OffContent="Deaktiviert"
+                        OnContent="Aktiviert"
+                        Toggled="switchToggle_Toggled">
+                    </ToggleSwitch>
+                </labs:SettingsExpander.Content>
+                <labs:SettingsExpander.Items>
+                    <labs:SettingsCard
+                    Header="1. Item"
+                    Description="Erstes Item">
+                        <Button Content="Content"/>
+                    </labs:SettingsCard>
 
+                    <labs:SettingsCard
+                    Header="2. Item"
+                    Description="Zweites Item">
+                        <CheckBox Content="Content"/>
+                    </labs:SettingsCard>
+                    <labs:SettingsCard
+                    ContentAlignment="Vertical"
+                    Header="Hintergrund"
+                    Description="Waehle dein Hintergrund aus">
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton
+                            x:Name="acrylBox"
+                            Content="Acryl"
+                            IsEnabled="True"/>
+                            <RadioButton
+                            x:Name="micaBox"
+                            Content="Mica"/>
+                            <RadioButton
+                            x:Name="lightBox"
+                            Content="Light"/>
+                        </StackPanel>
+                    </labs:SettingsCard>
+                </labs:SettingsExpander.Items>
+            </labs:SettingsExpander>
         </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </Page>

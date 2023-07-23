@@ -13,7 +13,7 @@ namespace PixeLList.Models
     {
 
         private static readonly string logFilePath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "log.txt");
+            Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "_log.txt");
 
         public static async Task<List<Note>> LadeNotizenAusJSON()
         {
@@ -31,9 +31,13 @@ namespace PixeLList.Models
             }
             catch (FileNotFoundException)
             {
-                await SchreibeLog("Notizen.json nicht gefunden."); // Lognachricht hinzufügen
+                await CreateBackupSystem();
 
+                await SchreibeLog("Notizen.json nicht gefunden."); // Lognachricht hinzufügen
+                
                 return new List<Note>();
+
+                
             }
         }
 
@@ -55,30 +59,51 @@ namespace PixeLList.Models
                 await stream.WriteLineAsync(logDatei);
             }
         }
-    
 
-/*
-    Zuerst wird die Methode LadeNotizenAusJSON aufgerufen, um die Liste der vorhandenen Notizen aus der JSON-Datei zu laden. 
-    Die await-Anweisung stellt sicher, dass der Ladevorgang abgeschlossen ist, bevor der Code fortgesetzt wird.
 
-    Anschließend wird in der geladenen Liste nach der zu aktualisierenden Notiz gesucht.
-    Dazu wird in diesem Beispiel angenommen, dass jede Notiz eine eindeutige Kennung (Id) hat. 
-    Die FirstOrDefault-Methode wird verwendet, um die erste Notiz in der Liste zu finden, die die angegebene Bedingung erfüllt. 
-    In diesem Fall wird die Bedingung verwendet, um die Notiz mit der passenden Id zu finden.
 
-    Wenn eine passende Notiz gefunden wurde (vorhandeneNotiz != null), werden die Eigenschaften der vorhandenen Notiz mit den Werten der übergebenen Notiz aktualisiert.
-    In diesem Fall wird der Title und der Text der vorhandenen Notiz mit den Werten der übergebenen Notiz aktualisiert.
+        public static async Task CreateBackupSystem()
+        {
+            try
+            {
+                StorageFile originialFile = await ApplicationData.Current.LocalFolder.GetFileAsync("notizen.json");
 
-    Nachdem die Notiz aktualisiert wurde, wird die Liste der Notizen zurück in das JSON-Format konvertiert, indem die JsonConvert.SerializeObject-Methode verwendet wird. 
-    Diese Methode nimmt ein Objekt entgegen und gibt eine JSON-Zeichenfolge zurück, die das Objekt repräsentiert.
+                StorageFolder backupFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Backups", CreationCollisionOption.OpenIfExists);
 
-    Schließlich wird das aktualisierte JSON in der JSON-Datei gespeichert. 
-    Zuerst wird die Datei mit der GetFileAsync-Methode aus dem lokalen Speicher abgerufen. 
-    Anschließend wird die FileIO.WriteTextAsync-Methode verwendet, um den aktualisierten JSON-Text in die Datei zu schreiben.
+                string timeStamp = DateTime.Now.ToString("yyyy.MM.dd_HH.mm.ss");
+                string backupfile = $"notizen_backup_{timeStamp}.json";
 
-    Durch diesen Ablauf werden die Änderungen an einer Notiz in der Liste vorgenommen und das aktualisierte JSON in der Datei gespeichert.
-*/
-public static async Task UpdateNotiz(Note notiz)
+
+                StorageFile backupFile = await originialFile.CopyAsync(backupFolder, backupfile, NameCollisionOption.GenerateUniqueName);
+            }
+            catch(Exception ex)
+            {
+                await SchreibeLog(ex.Message);
+            }
+        }
+
+        /*
+            Zuerst wird die Methode LadeNotizenAusJSON aufgerufen, um die Liste der vorhandenen Notizen aus der JSON-Datei zu laden. 
+            Die await-Anweisung stellt sicher, dass der Ladevorgang abgeschlossen ist, bevor der Code fortgesetzt wird.
+
+            Anschließend wird in der geladenen Liste nach der zu aktualisierenden Notiz gesucht.
+            Dazu wird in diesem Beispiel angenommen, dass jede Notiz eine eindeutige Kennung (Id) hat. 
+            Die FirstOrDefault-Methode wird verwendet, um die erste Notiz in der Liste zu finden, die die angegebene Bedingung erfüllt. 
+            In diesem Fall wird die Bedingung verwendet, um die Notiz mit der passenden Id zu finden.
+
+            Wenn eine passende Notiz gefunden wurde (vorhandeneNotiz != null), werden die Eigenschaften der vorhandenen Notiz mit den Werten der übergebenen Notiz aktualisiert.
+            In diesem Fall wird der Title und der Text der vorhandenen Notiz mit den Werten der übergebenen Notiz aktualisiert.
+
+            Nachdem die Notiz aktualisiert wurde, wird die Liste der Notizen zurück in das JSON-Format konvertiert, indem die JsonConvert.SerializeObject-Methode verwendet wird. 
+            Diese Methode nimmt ein Objekt entgegen und gibt eine JSON-Zeichenfolge zurück, die das Objekt repräsentiert.
+
+            Schließlich wird das aktualisierte JSON in der JSON-Datei gespeichert. 
+            Zuerst wird die Datei mit der GetFileAsync-Methode aus dem lokalen Speicher abgerufen. 
+            Anschließend wird die FileIO.WriteTextAsync-Methode verwendet, um den aktualisierten JSON-Text in die Datei zu schreiben.
+
+            Durch diesen Ablauf werden die Änderungen an einer Notiz in der Liste vorgenommen und das aktualisierte JSON in der Datei gespeichert.
+        */
+        public static async Task UpdateNotiz(Note notiz)
         {
             List<Note> notizen = await LadeNotizenAusJSON();
 

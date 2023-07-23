@@ -1,4 +1,5 @@
-﻿using PixeLList.Models;
+﻿using Microsoft.UI.Xaml.Controls;
+using PixeLList.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,13 @@ namespace PixeLList.ViewModels
         private Note _selectedNote;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private ComboBox _combobox;
+
+        public ComboBox ComboBox
+        {
+            get { return _combobox; } set { _combobox = value; _combobox.Items.Clear(); }
+        }
 
         private int selectedNoteIndex;
         public int SelectedNoteIndex
@@ -48,12 +56,7 @@ namespace PixeLList.ViewModels
         public ObservableCollection<Note> Notes { get; set; }
         public NotesViewModel()
         {
-            Notes = new ObservableCollection<Note>()
-            {
-                new Note { Title = "Hallo", Text = "Test 1" },
-                new Note { Title = "Hallo 1", Text = "Test 2" },
-                new Note { Title = "Hallo 2", Text = "Test 3" }
-            };
+            Notes = new ObservableCollection<Note>();
         }
 
         public void aktualisierteNotizen(List<Note> notes)
