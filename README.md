@@ -1,8 +1,8 @@
 # PixeLList
 
-Dies ist ein persönliches Notizhandbuch, womit man neue Notizen erstellen und Verwalten kann (Bearbeiten und Löschen)
+Dies ist ein persönliches Notizhandbuch, womit man sich Notizen erstellen und verwalten kann.
 
-Todo:
+Folgendes wird noch implementiert:
 
   - Bild einfügen
   - Ordnersystem
