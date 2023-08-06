@@ -5,7 +5,7 @@ Dies ist ein persönliches Notizhandbuch, womit man sich Notizen erstellen und v
 Folgendes wird noch implementiert:
 
   - [x] Bild einfügen
-  - [] Ordnersystem
-  - [} Farbliche unterteilung
-  - [} Benachrichtung
+  - [ ] Ordnersystem
+  - [ ] Farbliche unterteilung
+  - [ ] Benachrichtung
     
