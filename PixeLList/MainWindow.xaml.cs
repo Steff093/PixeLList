@@ -23,6 +23,10 @@ using Uno.Extensions.Specialized;
 using System.ComponentModel.Design;
 using Windows.UI.StartScreen;
 using System.Drawing;
+using Windows.Storage;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Media.Devices;
+using System.Collections.ObjectModel;
 
 namespace PixeLList
 {
@@ -33,15 +37,18 @@ namespace PixeLList
     {
         private NotesViewModel _notesViewModel;
         private NavigationViewItem _selectedNavItem;
-        private AllNotesList _allnotesList;
+        //public event EventHandler<BitmapImage> ImageSelected;
+        private ObservableCollection<Note> allNotes;
         public MainWindow()
         {
             this.InitializeComponent();
             Title = "PixeLList";
             _notesViewModel = new NotesViewModel();
+            allNotes = new ObservableCollection<Note>();
 
-            LoadNotes();
-            
+            //ExtendsContentIntoTitleBar = true;
+            //SetTitleBar(AppTitleBar);
+
         }
 
         private void navigateItem_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -80,64 +87,40 @@ namespace PixeLList
 
             contentFrame.Content = page;
 
-            LoadNotes();
+            //LoadNotes();
         }
-        private void allNotiz_Click(object sender, RoutedEventArgs e)
-        {
-            AllNotesList allnotes = new AllNotesList();
+        //private async void picTureMenuFlyout_Click(object sender, RoutedEventArgs e)
+        //{
+        //    pictureDialog.IsEnabled = true;
+        //    //LoadNotes();
+        //    await pictureDialog.ShowAsync();
 
-            contentFrame.Content = allnotes;
-        }
+        //}
+        //private async void LoadNotes()
+        //{
+        //    try
+        //    {
+        //        List<Note> notes = await JsonHelper.LadeNotizenAusJSON();
+        //        pictureBox.Items.Clear();
+        //        foreach (var note in notes)
+        //        {
+        //            pictureBox.Items.Add(note.Title);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        meldungsBlock.Text = "Fehler" + ex.Message;
+        //    }
+        //}
 
-        private void picTureMenuFlyout_Click(object sender, RoutedEventArgs e)
-        {
-            //FileOpenPicker();
-
-            pictureDialog.IsEnabled = true;
-            pictureDialog.ShowAsync();
-            LoadNotes();
-
-        }
-        private async void LoadNotes()
-        {
-            try
-            {
-                List<Note> notes = await JsonHelper.LadeNotizenAusJSON();
-                pictureBox.Items.Clear();
-                foreach (var note in notes)
-                {
-                    pictureBox.Items.Add(note.Title);
-                }
-                //ContentDialogResult result = await pictureDialog.ShowAsync();
-                //if (pictureBox.SelectedItem != null && result == ContentDialogResult.Primary) { }
-                //FileOpenPicker();
-
-            }
-            catch (Exception ex)
-            {
-                meldungsBlock.Text = ex.Message;
-            }
-        }
-        private async void FileOpenPicker()
-        {
-            try
-            {
-                FileOpenPicker folderPicker = new();
-                folderPicker.ViewMode = PickerViewMode.Thumbnail;
-                folderPicker.SuggestedStartLocation = PickerLocationId.Desktop;
-                folderPicker.FileTypeFilter.Add(".jpg");
-                folderPicker.FileTypeFilter.Add(".jpeg");
-                folderPicker.FileTypeFilter.Add(".png");
-
-                var hwd = WindowNative.GetWindowHandle(this);
-                WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwd);
-                var folder = await folderPicker.PickSingleFileAsync();
-            }
-            catch (Exception ex)
-            {
-                pictureDialog.Content = ex.Message;
-            }
-        }
+        //private void pictureDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        //{
+        //    if (pictureBox.SelectedItem != null)
+        //    {
+        //        //FileOpenPicker();
+        //        args.Cancel = true;
+        //    }
+        //}
     }
 }
 

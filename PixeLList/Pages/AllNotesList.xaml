@@ -31,6 +31,11 @@
                                 <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleLargeTextBlockStyle}"/>
                                 <TextBlock Text="{Binding Text}" Style="{ThemeResource BaseTextBlockStyle}"/>
                                 <TextBlock Text="{Binding Erstellungsdatum}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <Image Stretch="None">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{Binding BitImagePath}"/>
+                                    </Image.Source>
+                                </Image>
                                 <Button x:Name="moreButton" Content="Mehr" Visibility="Collapsed">
                                     <Button.Flyout>
                                         <MenuFlyout>
@@ -42,6 +47,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
+                    <Image x:Name="imageControl" Visibility="Collapsed"/>
                 </ListView>
             </StackPanel>
         </ScrollViewer>

@@ -34,10 +34,8 @@ namespace PixeLList.Models
                 await CreateBackupSystem();
 
                 await SchreibeLog("Notizen.json nicht gefunden."); // Lognachricht hinzufügen
-                
-                return new List<Note>();
 
-                
+                return new List<Note>();
             }
         }
 
@@ -60,8 +58,6 @@ namespace PixeLList.Models
             }
         }
 
-
-
         public static async Task CreateBackupSystem()
         {
             try
@@ -76,7 +72,7 @@ namespace PixeLList.Models
 
                 StorageFile backupFile = await originialFile.CopyAsync(backupFolder, backupfile, NameCollisionOption.GenerateUniqueName);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await SchreibeLog(ex.Message);
             }
