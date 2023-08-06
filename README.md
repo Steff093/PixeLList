@@ -7,5 +7,5 @@ Folgendes wird noch implementiert:
   - [x] Bild einfügen
   - [ ] Ordnersystem
   - [ ] Farbliche unterteilung
-  - [ ] Benachrichtung
+  - [ ] Benachrichtungen
     
