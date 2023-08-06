@@ -4,8 +4,8 @@ Dies ist ein persönliches Notizhandbuch, womit man sich Notizen erstellen und v
 
 Folgendes wird noch implementiert:
 
-  - Bild einfügen
-  - Ordnersystem
-  - Farbliche unterteilung
-  - Benachrichtung
+  - [x] Bild einfügen
+  - [] Ordnersystem
+  - [} Farbliche unterteilung
+  - [} Benachrichtung
     
