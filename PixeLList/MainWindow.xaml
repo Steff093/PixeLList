@@ -9,38 +9,81 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <StackPanel
-            x:Name="Titlebar"
+    <Grid >
+        <!--<Grid
+            x:Name="AppTitleBar"
             Grid.Row="0"
-            Margin="0,0,120,0"
-            Orientation="Horizontal">
-            <Image Source="Assets/microsoft.gif"/>
-        </StackPanel>
+            Height="48"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    x:Name="LeftPaddingColumn"
+                    Width="0" />
+                <ColumnDefinition
+                    x:Name="IconColumn"
+                    Width="Auto" />
+                <ColumnDefinition
+                    x:Name="TitleColumn"
+                    Width="Auto" />
+                <ColumnDefinition
+                    x:Name="LeftDragColumn"
+                    Width="*" />
+                <ColumnDefinition
+                    x:Name="SearchColumn"
+                    Width="Auto" />
+                <ColumnDefinition
+                    x:Name="RightDragColumn"
+                    Width="*" />
+                <ColumnDefinition
+                    x:Name="RightPaddingColumn"
+                    Width="0" />
+            </Grid.ColumnDefinitions>
+            <Image
+                x:Name="TitleBarIcon"
+                Grid.Column="1"
+                Width="16"
+                Height="16"
+                Margin="8,0,0,0"
+                Source="Assets/microsoft.gif" />
+            <TextBlock
+                x:Name="TitleTextBlock"
+                Grid.Column="2"
+                Margin="4,0,0,0"
+                VerticalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind Title}"/>
+            
+            <AutoSuggestBox
+                Grid.Column="4"
+                Width="260"
+                Margin="4,0"
+                VerticalAlignment="Center"
+                PlaceholderText="Notiz suchen..."
+                QueryIcon="Find" />-->
 
-        <ContentDialog 
+        <!--<ContentDialog 
             x:Name="pictureDialog"
             PrimaryButtonText="Ok"
+            PrimaryButtonClick="pictureDialog_PrimaryButtonClick"
             CloseButtonText="Abbrechen"
             IsEnabled="False">
             <StackPanel>
                 <TextBlock x:Name="meldungsBlock" Text="Bitte wählen Sie eine Notiz aus"/>
                 <StackPanel>
                     <ComboBox x:Name="pictureBox" Width="200" >
-                        <ComboBoxItem Content="Notiz auswählen" IsEnabled="False" IsSelected="True" />
+                        <ComboBoxItem x:Name="notizBox" Content="Notiz auswählen" IsEnabled="False" IsSelected="True" />
                     </ComboBox>
                 </StackPanel>
             </StackPanel>
-        </ContentDialog>
+        </ContentDialog>-->
 
-
-        <NavigationView x:Name="navigateItem" Padding="19,0,0,0" ItemInvoked="navigateItem_ItemInvoked">
-            <Frame x:Name="contentFrame" >
+        <NavigationView x:Name="navigateItem" ItemInvoked="navigateItem_ItemInvoked" Grid.Row="1">
+            <Frame x:Name="contentFrame">
                 <Frame.Content>
                     <local1:AllNotesList/>
                 </Frame.Content>
             </Frame>
-            
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="Notizen">
                     <Grid>
@@ -50,12 +93,12 @@
                         </Grid.ColumnDefinitions>
                         <FontIcon Grid.Column="0" Glyph="&#xE70B;" HorizontalAlignment="Left"/>
                         <TextBlock x:Name="Notizen" Grid.Column="1" Text="Notizen"/>
+
                     </Grid>
                     <NavigationViewItem.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutItem x:Name="newNotiz" Text="Neue Notiz" Click="newNotiz_Click"/>
-                            <MenuFlyoutItem x:Name="allNotiz" Text="Alle Notizen" Click="allNotiz_Click"/>
-                            <MenuFlyoutItem x:Name="pitureMenuFlyout" Text="Bild hinzufügen" Click="picTureMenuFlyout_Click"/>
+                            <!--<MenuFlyoutItem x:Name="pitureMenuFlyout" Text="Bild hinzufügen" Click="picTureMenuFlyout_Click"/>-->
                         </MenuFlyout>
                     </NavigationViewItem.ContextFlyout>
                 </NavigationViewItem>

@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using PixeLList.Models;
@@ -17,6 +18,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Devices;
 using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -31,7 +33,6 @@ namespace PixeLList.Pages
     {
         public ObservableCollection<Note> Notes { get; set; }
         public NotesViewModel ViewModel;
-
         public AllNotesList()
         {
             this.InitializeComponent();
@@ -47,12 +48,19 @@ namespace PixeLList.Pages
 
             LoadNotesAsync();
 
-            JsonHelper.CreateBackupSystem();
+            //JsonHelper.CreateBackupSystem();
+
         }
+
+        //private void MainWindow_ImageSelected(object sender, BitmapImage e)
+        //{
+        //    // Setze das ausgewählte Bild im Image-Control in AllNotesList.xaml
+        //    imageControl.Source = e;
+        //    imageControl.Visibility = Visibility.Visible;
+        //}
+
         private async void LoadNotesAsync()
         {
-            //Hier auf Fehler überprüfen !
-
             // Laden der Notizen aus der JSON-Datei
             List<Note> notes = await JsonHelper.LadeNotizenAusJSON();
 
@@ -114,6 +122,8 @@ namespace PixeLList.Pages
         {
             StackPanel stackPanel = sender as StackPanel;
             Button moreButton = stackPanel.FindName("moreButton") as Button;
+
+            var selectedNote = stackPanel.DataContext as Note;
 
             if (moreButton != null)
             {
