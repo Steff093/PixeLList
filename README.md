@@ -5,7 +5,8 @@ Dies ist ein persönliches Notizhandbuch, womit man sich Notizen erstellen und v
 Folgendes wird noch implementiert:
 
   - [x] Bild einfügen
+  - [ ] Hintergrund selbständig anpassen (Micra und Acryl)
   - [ ] Ordnersystem
-  - [ ] Farbliche unterteilung
+  - [ ] Farbliche unterteilung im Ordnersystem
   - [ ] Benachrichtungen
     
