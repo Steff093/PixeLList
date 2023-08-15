@@ -23,32 +23,37 @@
                 Text="Keine Notizen vorhanden." 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Bottom"  Visibility="{Binding Notes.Count}"/>
-                <ListView x:Name="NoteListView" ItemsSource="{Binding Notes}" SelectedIndex="{Binding SelectedNoteIndex}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel x:Name="stackPanel" PointerPressed="stackPanel_PointerPressed">
-                                <TextBlock Text="{Binding Id}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                                <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleLargeTextBlockStyle}"/>
-                                <TextBlock Text="{Binding Text}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                                <TextBlock Text="{Binding Erstellungsdatum}" Style="{ThemeResource BaseTextBlockStyle}"/>
-                                <Image Stretch="None">
-                                    <Image.Source>
-                                        <BitmapImage UriSource="{Binding BitImagePath}"/>
-                                    </Image.Source>
-                                </Image>
-                                <Button x:Name="moreButton" Content="Mehr" Visibility="Collapsed">
-                                    <Button.Flyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem x:Name="bearbeitenFlyout" Text="Bearbeiten" Click="bearbeitenFlyout_Click"/>
-                                            <MenuFlyoutItem x:Name="deleteFlyout" Text="Löschen" Click="deleteFlyout_Click"/>
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <Image x:Name="imageControl" Visibility="Collapsed"/>
-                </ListView>
+                <TextBlock Text="Alle Notizen" Foreground="White" FontSize="40" TextAlignment="Left" TextDecorations="Underline"/>
+                <Grid>
+                    <ListView x:Name="NoteListView" ItemsSource="{Binding Notes}" SelectedIndex="{Binding SelectedNoteIndex}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel x:Name="stackPanel" PointerPressed="stackPanel_PointerPressed">
+                                    <TextBlock Text="{Binding Id}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding Text}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding Erstellungsdatum}" Style="{ThemeResource BaseTextBlockStyle}"/>
+
+                                    <Image x:Name="imagePath" Stretch="None">
+                                        <Image.Source>
+                                            <BitmapImage UriSource="{Binding BitImagePath}"/>
+                                        </Image.Source>
+                                    </Image>
+                                    <Button x:Name="moreButton" Content="Mehr" Visibility="Collapsed">
+                                        <Button.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem x:Name="bearbeitenFlyout" Text="Bearbeiten" Click="bearbeitenFlyout_Click"/>
+                                                <MenuFlyoutItem x:Name="deleteFlyout" Text="Löschen" Click="deleteFlyout_Click"/>
+                                                <!--<MenuFlyoutItem x:Name="addPicture" Text="Bild hinzufügen" Click="addPicture_Click"/>-->
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <Image x:Name="imageControl" Visibility="Collapsed"/>
+                    </ListView>
+                </Grid>
             </StackPanel>
         </ScrollViewer>
 
