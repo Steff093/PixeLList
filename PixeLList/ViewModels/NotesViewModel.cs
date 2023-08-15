@@ -14,7 +14,7 @@ namespace PixeLList.ViewModels
 {
     public class NotesViewModel : INotifyPropertyChanged
     {
-        private Note _selectedNote;
+        private NoteModel _selectedNote;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -47,23 +47,23 @@ namespace PixeLList.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public Note SelectedNote
+        public NoteModel SelectedNote
         {
             get { return _selectedNote; }
             set { _selectedNote = value; OnPropertyChanged(nameof(SelectedNote)); }
 
         }
-        public ObservableCollection<Note> Notes { get; set; }
+        public ObservableCollection<NoteModel> Notes { get; set; }
         public NotesViewModel()
         {
-            Notes = new ObservableCollection<Note>();
+            Notes = new ObservableCollection<NoteModel>();
         }
 
-        public void aktualisierteNotizen(List<Note> notes)
+        public void aktualisierteNotizen(List<NoteModel> notes)
         {
-            var newNotes = new List<Note>(notes);
+            var newNotes = new List<NoteModel>(notes);
             Notes.Clear();
-            foreach (Note note in newNotes)
+            foreach (NoteModel note in newNotes)
             {
                 Notes.Add(note);
             }

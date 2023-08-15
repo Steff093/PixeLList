@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PixeLList.Models
 {
-    public class Note
+    public class NoteModel
     {
         public int Id { get; set; }
         [MaxLength(100)]

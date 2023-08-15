@@ -20,6 +20,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Devices;
 using Windows.Storage;
+using Windows.Storage.Pickers;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,8 +33,9 @@ namespace PixeLList.Pages
     /// </summary>
     public sealed partial class AllNotesList : Page
     {
-        public ObservableCollection<Note> Notes { get; set; }
+        public ObservableCollection<NoteModel> Notes { get; set; }
         public NotesViewModel ViewModel;
+        private NoteModel _currentNote;
         public AllNotesList()
         {
             this.InitializeComponent();
@@ -46,38 +49,35 @@ namespace PixeLList.Pages
             else if (noNotesMessage != null)
                 noNotesMessage.Visibility = Visibility.Collapsed;
 
+            _currentNote = new NoteModel();
             LoadNotesAsync();
 
             //JsonHelper.CreateBackupSystem();
 
         }
 
-        //private void MainWindow_ImageSelected(object sender, BitmapImage e)
-        //{
-        //    // Setze das ausgewählte Bild im Image-Control in AllNotesList.xaml
-        //    imageControl.Source = e;
-        //    imageControl.Visibility = Visibility.Visible;
-        //}
-
         private async void LoadNotesAsync()
         {
             // Laden der Notizen aus der JSON-Datei
-            List<Note> notes = await JsonHelper.LadeNotizenAusJSON();
+            List<NoteModel> notes = await JsonNote.LadeNotizenAusJSON();
 
             // Aktualisieren der Notizen in der bestehenden ObservableCollection
-            ViewModel.Notes.Clear();
-            foreach (var note in notes)
+            if (!ViewModel.Notes.SequenceEqual(notes))
             {
-                if (note.Id == 0)
+                ViewModel.Notes.Clear();
+                foreach (var note in notes)
                 {
-                    int maxID = ViewModel.Notes.Any() ? ViewModel.Notes.Max(note => note.Id) : 0; note.Id = maxID + 1;
+                    if (note.Id == 0)
+                    {
+                        int maxID = ViewModel.Notes.Any() ? ViewModel.Notes.Max(note => note.Id) : 0; note.Id = maxID + 1;
+                    }
+                    ViewModel.Notes.Add(note);
                 }
-                ViewModel.Notes.Add(note);
             }
         }
         private async void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            await JsonHelper.SpeichereNotizen(ViewModel?.Notes.ToList());
+            await JsonNote.SpeichereNotizen(ViewModel?.Notes.ToList());
             editPopup.IsOpen = false; // Schließe das Popup-Fenster
             ViewModel.OnPropertyChanged(nameof(ViewModel.SelectedNote));
             LoadNotesAsync();
@@ -91,15 +91,12 @@ namespace PixeLList.Pages
         private async void deleteFlyout_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = sender as MenuFlyoutItem;
-            if (menuItem != null)
+            var note = menuItem?.DataContext as NoteModel;
+            if (note != null)
             {
-                var note = menuItem.DataContext as Note;
-                if (note != null)
-                {
-                    ViewModel.Notes.Remove(note);
-                    // Speichern der Notizen in der JSON-Datei nach dem Löschen
-                    await JsonHelper.SpeichereNotizen(ViewModel.Notes.ToList());
-                }
+                ViewModel.Notes.Remove(note);
+                // Speichern der Notizen in der JSON-Datei nach dem Löschen
+                await JsonNote.SpeichereNotizen(ViewModel.Notes.ToList());
             }
         }
 
@@ -107,14 +104,11 @@ namespace PixeLList.Pages
         {
             editPopup.IsOpen = true;
             var menuItem = sender as MenuFlyoutItem;
-            if (menuItem != null)
+            var note = menuItem?.DataContext as NoteModel;
+            if (note != null)
             {
-                var note = menuItem.DataContext as Note;
-                if (note != null)
-                {
-                    ViewModel.SelectedNote = note;
-                    editPopup.IsOpen = true;
-                }
+                ViewModel.SelectedNote = note;
+                editPopup.IsOpen = true;
             }
         }
 
@@ -122,24 +116,60 @@ namespace PixeLList.Pages
         {
             StackPanel stackPanel = sender as StackPanel;
             Button moreButton = stackPanel.FindName("moreButton") as Button;
-
-            var selectedNote = stackPanel.DataContext as Note;
+            var selectedNote = stackPanel?.DataContext as NoteModel;
 
             if (moreButton != null)
             {
                 int selectIndex = NoteListView.SelectedIndex;
-                if (selectIndex == ViewModel.SelectedNoteIndex)
-                {
-                    moreButton.Visibility = Visibility.Collapsed;
-                    ViewModel.SelectedNoteIndex = -1;  // Zurücksetzen des Index auf -1
-                }
-                else
-                {
-                    moreButton.Visibility = Visibility.Visible;
-                    ViewModel.SelectedNoteIndex = selectIndex;
-                }
+                ViewModel.SelectedNoteIndex = selectIndex == ViewModel.SelectedNoteIndex ? -1 : selectIndex;
+
+                moreButton.Visibility = ViewModel.SelectedNoteIndex == selectIndex ? Visibility.Collapsed : Visibility.Visible;
             }
         }
+
+        //private void addPicture_Click(object sender, RoutedEventArgs e)
+        //{
+        //    FileOpenPickerAsync();
+        //}
+
+        //private async void FileOpenPickerAsync()
+        //{
+        //    try
+        //    {
+        //        FileOpenPicker fileOpenPicker = new()
+        //        {
+        //            ViewMode = PickerViewMode.Thumbnail,
+        //            FileTypeFilter = { ".jpg", ".jpeg", ".png", ".gif" },
+        //        };
+
+        //        nint windowHandle = WindowNative.GetWindowHandle(App.Window);
+        //        WinRT.Interop.InitializeWithWindow.Initialize(fileOpenPicker, windowHandle);
+        //        var file = await fileOpenPicker.PickSingleFileAsync();
+
+        //        if (file != null)
+        //        {
+        //            using (var stream = await file.OpenAsync(FileAccessMode.Read))
+        //            {
+        //                var bitmapImage = new BitmapImage();
+        //                await bitmapImage.SetSourceAsync(stream);
+
+        //                var selectedNote = NoteListView.SelectedItem as Note;
+
+        //                if (selectedNote != null)
+        //                {
+        //                    _currentNote.BitImagePath = file.Path;
+
+        //                    // Hier gibt es Probleme. Ich muss auf imagePath zugreifen können und nicht auf imageControl.
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        //ToDo, Textblock einfügen, um einen Fehler anzuzeigen.
+        //    }
+
+        //}
     }
 }
 

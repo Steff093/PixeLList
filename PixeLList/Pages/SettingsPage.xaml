@@ -8,7 +8,9 @@
     xmlns:local="using:PixeLList.Pages"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:viewmodels="using:PixeLList.ViewModels" 
+    d:DataContext="{d:DesignInstance Type=viewmodels:NotesViewModel}"
     mc:Ignorable="d">
 
     <ScrollViewer Margin="56,44,56,44">
@@ -40,6 +42,7 @@
                         OnContent="Aktiviert"
                         Toggled="switchToggle_Toggled">
                     </ToggleSwitch>
+                    
                 </labs:SettingsExpander.Content>
                 <labs:SettingsExpander.Items>
                     <labs:SettingsCard
@@ -50,7 +53,7 @@
 
                     <labs:SettingsCard
                     Header="2. Item"
-                    Description="Zweites Item">
+                    Description="Zweites Item">  
                         <CheckBox Content="Content"/>
                     </labs:SettingsCard>
                     <labs:SettingsCard
@@ -58,16 +61,9 @@
                     Header="Hintergrund"
                     Description="Waehle dein Hintergrund aus">
                         <StackPanel Orientation="Horizontal">
-                            <RadioButton
-                            x:Name="acrylBox"
-                            Content="Acryl"
-                            IsEnabled="True"/>
-                            <RadioButton
-                            x:Name="micaBox"
-                            Content="Mica"/>
-                            <RadioButton
-                            x:Name="lightBox"
-                            Content="Light"/>
+                            <RadioButton Content="Acryl" Checked="RadioButton_Checked"/>
+                            <RadioButton Content="MicaBase" Checked="RadioButton_Checked"/>
+                            <RadioButton Content="MicaBaseAlt" Checked="RadioButton_Checked"/>
                         </StackPanel>
                     </labs:SettingsCard>
                 </labs:SettingsExpander.Items>

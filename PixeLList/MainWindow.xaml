@@ -4,12 +4,15 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PixeLList"
-    xmlns:local1="using:PixeLList.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid >
+    <Window.SystemBackdrop>
+        <MicaBackdrop Kind="BaseAlt"/>
+    </Window.SystemBackdrop>
+
+    <Grid Padding="10">
         <!--<Grid
             x:Name="AppTitleBar"
             Grid.Row="0"
@@ -53,7 +56,7 @@
                 VerticalAlignment="Center"
                 Style="{StaticResource CaptionTextBlockStyle}"
                 Text="{x:Bind Title}"/>
-            
+
             <AutoSuggestBox
                 Grid.Column="4"
                 Width="260"
@@ -78,21 +81,21 @@
             </StackPanel>
         </ContentDialog>-->
 
-        <NavigationView x:Name="navigateItem" ItemInvoked="navigateItem_ItemInvoked" Grid.Row="1">
-            <Frame x:Name="contentFrame">
-                <Frame.Content>
-                    <local1:AllNotesList/>
-                </Frame.Content>
-            </Frame>
+        <Grid>
+            <Image Source="Assets/LogoPixel.png" Stretch="Uniform"/>
+        </Grid>
+        <NavigationView x:Name="navigateItem" ItemInvoked="navigateItem_ItemInvoked" Grid.Row="0" >
+            <Frame x:Name="contentFrame" Grid.Row="2"/>
             <NavigationView.MenuItems>
-                <NavigationViewItem Tag="Notizen">
+                <NavigationViewItem Tag="Notizen" Background="{ThemeResource NavgiationViewItemBackground}" BackgroundSizing="InnerBorderEdge">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="32"/>
                             <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <FontIcon Grid.Column="0" Glyph="&#xE70B;" HorizontalAlignment="Left"/>
-                        <TextBlock x:Name="Notizen" Grid.Column="1" Text="Notizen"/>
+                        <TextBlock Grid.Column="1" Text="Notizen"/>
 
                     </Grid>
                     <NavigationViewItem.ContextFlyout>

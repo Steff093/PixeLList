@@ -11,6 +11,7 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="TaskbarColor" Color="{ThemeResource SystemChromeLowColor}"/>
+            <Color x:Key="NavgiationViewItemBackground">#00ffff</Color>
             <!-- Other app resources here -->
         </ResourceDictionary>
     </Application.Resources>

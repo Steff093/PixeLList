@@ -19,7 +19,6 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
-using Uno.Extensions.Specialized;
 using System.ComponentModel.Design;
 using Windows.UI.StartScreen;
 using System.Drawing;
@@ -27,6 +26,9 @@ using Windows.Storage;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Media.Devices;
 using System.Collections.ObjectModel;
+using Windows.UI;
+using Microsoft.UI;
+
 
 namespace PixeLList
 {
@@ -37,14 +39,13 @@ namespace PixeLList
     {
         private NotesViewModel _notesViewModel;
         private NavigationViewItem _selectedNavItem;
-        //public event EventHandler<BitmapImage> ImageSelected;
-        private ObservableCollection<Note> allNotes;
+        private ObservableCollection<NoteModel> allNotes;
         public MainWindow()
         {
             this.InitializeComponent();
             Title = "PixeLList";
             _notesViewModel = new NotesViewModel();
-            allNotes = new ObservableCollection<Note>();
+            allNotes = new ObservableCollection<NoteModel>();
 
             //ExtendsContentIntoTitleBar = true;
             //SetTitleBar(AppTitleBar);
@@ -53,33 +54,27 @@ namespace PixeLList
 
         private void navigateItem_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
+            NavigationViewItem selectedItem = navigateItem.SelectedItem as NavigationViewItem;
+
             if (args.IsSettingsInvoked)
             {
                 contentFrame.CacheSize = 0; // Deaktiviert die Navigation-History
                 contentFrame.Navigate(typeof(SettingsPage));
-                _selectedNavItem = null; // Zurücksetzen des ausgewählten NavigationViewItems
             }
             else
             {
-                NavigationViewItem item = args.InvokedItem as NavigationViewItem;
-                if (item != null && item.Tag.ToString() == "Notizen")
-                {
-                    contentFrame.Navigated += ContentFrame_Navigated;
-                    // Das ausgewählte Element ist bereits "Notizen"
-                    if (navigateItem.SelectedItem is NavigationViewItem selectedItem && selectedItem.Tag.ToString() == "Notizen")
-                        return;
+                var selected = selectedItem.Tag.ToString();
 
-                    _selectedNavItem = item;
-                    contentFrame.Navigate(typeof(AllNotesList));
+                switch (selected)
+                {
+                    case "Notizen":
+                        contentFrame.Navigate(typeof(AllNotesList));
+                        break;
+                    case "Ordner":
+                        contentFrame.Navigate(typeof(FolderNotePage));
+                        break;
                 }
-                else
-                    contentFrame.Navigate(typeof(AllNotesList));
             }
-        }
-        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
-        {
-            if (e.SourcePageType == typeof(AllNotesList))
-                navigateItem.SelectedItem = _selectedNavItem;
         }
         private void newNotiz_Click(object sender, RoutedEventArgs e)
         {
